@@ -8,16 +8,6 @@ This project deals with creating a csv file using apache airflow that will be us
 
 **run command: docker compose up -d**
 
-CONTAINER ID   IMAGE                      COMMAND                  CREATED          STATUS                    PORTS                                                  NAMES
-54256ab3aa0e   apache/airflow:2.10.3      "/usr/bin/dumb-init …"   15 minutes ago   Up 15 minutes (healthy)   0.0.0.0:8080->8080/tcp                                 airflow_kafka_integration-airflow-webserver-1
-b62b8d9e7ab2   apache/airflow:2.10.3      "/usr/bin/dumb-init …"   15 minutes ago   Up 15 minutes (healthy)   8080/tcp                                               airflow_kafka_integration-airflow-scheduler-1
-091adbe60053   apache/airflow:2.10.3      "/usr/bin/dumb-init …"   15 minutes ago   Up 15 minutes (healthy)   8080/tcp                                               airflow_kafka_integration-airflow-worker-1
-b42ffcff7659   apache/airflow:2.10.3      "/usr/bin/dumb-init …"   15 minutes ago   Up 15 minutes (healthy)   8080/tcp                                               airflow_kafka_integration-airflow-triggerer-1
-d91636359ec2   bitnami/kafka:latest       "/opt/bitnami/script…"   15 minutes ago   Up 15 minutes             0.0.0.0:9092->9092/tcp                                 airflow_kafka_integration-kafka-1
-dc0654c9d8c7   redis:7.2-bookworm         "docker-entrypoint.s…"   15 minutes ago   Up 15 minutes (healthy)   6379/tcp                                               airflow_kafka_integration-redis-1
-5a6888bf0aa6   postgres:13                "docker-entrypoint.s…"   15 minutes ago   Up 15 minutes (healthy)   5432/tcp                                               airflow_kafka_integration-postgres-1
-544804956aab   bitnami/zookeeper:latest   "/opt/bitnami/script…"   15 minutes ago   Up 15 minutes             2888/tcp, 3888/tcp, 0.0.0.0:2181->2181/tcp, 8080/tcp   airflow_kafka_integration-zookeeper-1
-
 <img width="1492" alt="image" src="https://github.com/user-attachments/assets/ed29177e-7587-4050-9a50-3dcb90c36c0c">
 
 5) An error w.r.t kafka package will occur on Airflow console, we will need to install kafka-python and pandas packages manually in each airflow web server, scheduler, worker containers using airflow user. 
