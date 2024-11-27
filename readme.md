@@ -23,18 +23,18 @@ Note: Step 5 is to be done if requirement.txt file doesn't work.
 
 Example:
 
-**docker exec -it -u root 54256ab3aa0e bash
+**docker exec -it -u root 54256ab3aa0e bash**
 
-apt-get update 
-apt-get install -y vim
-**
+**apt-get update **
+**apt-get install -y vim**
+
 
 Once installation is done on all 3 airflow containers using root, go to cd /home/airflow/.local/lib/python3.12/site-packages/kafka/ using airflow user one by one on web server, scheduler, worker containers and make below changes.
 
 Example:
-**docker exec -it 54256ab3aa0e bash
-vi /home/airflow/.local/lib/python3.12/site-packages/kafka/codec.py
-**
+**docker exec -it 54256ab3aa0e bash**
+**vi /home/airflow/.local/lib/python3.12/site-packages/kafka/codec.py**
+
 
 Old:
 from **kafka.vendor**.six.moves import range
