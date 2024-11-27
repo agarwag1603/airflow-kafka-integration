@@ -6,7 +6,7 @@ This project deals with creating a csv file using apache airflow that will be us
 3) Place kafka_csv_dag.py dag file in dags folder.
 4) use docker-compose.yaml file to spin below dockers services with apache kafka and airflow
 
-run command: docker compose up -d
+**run command: docker compose up -d**
 
 CONTAINER ID   IMAGE                      COMMAND                  CREATED          STATUS                    PORTS                                                  NAMES
 54256ab3aa0e   apache/airflow:2.10.3      "/usr/bin/dumb-init …"   15 minutes ago   Up 15 minutes (healthy)   0.0.0.0:8080->8080/tcp                                 airflow_kafka_integration-airflow-webserver-1
@@ -18,12 +18,14 @@ dc0654c9d8c7   redis:7.2-bookworm         "docker-entrypoint.s…"   15 minutes 
 5a6888bf0aa6   postgres:13                "docker-entrypoint.s…"   15 minutes ago   Up 15 minutes (healthy)   5432/tcp                                               airflow_kafka_integration-postgres-1
 544804956aab   bitnami/zookeeper:latest   "/opt/bitnami/script…"   15 minutes ago   Up 15 minutes             2888/tcp, 3888/tcp, 0.0.0.0:2181->2181/tcp, 8080/tcp   airflow_kafka_integration-zookeeper-1
 
+<img width="1492" alt="image" src="https://github.com/user-attachments/assets/ed29177e-7587-4050-9a50-3dcb90c36c0c">
+
 5) An error w.r.t kafka package will occur on Airflow console, we will need to install kafka-python and pandas packages manually in each airflow web server, scheduler, worker containers using airflow user. 
 
 Example:
 
-docker exec -it 54256ab3aa0e bash
-pip install pandas kafka-python
+**docker exec -it 54256ab3aa0e bash
+pip install pandas kafka-python**
 
 Note: Step 5 is to be done if requirement.txt file doesn't work.
 
@@ -31,34 +33,36 @@ Note: Step 5 is to be done if requirement.txt file doesn't work.
 
 Example:
 
-docker exec -it -u root 54256ab3aa0e bash
+**docker exec -it -u root 54256ab3aa0e bash
+
 apt-get update 
 apt-get install -y vim
-
+**
 
 Once installation is done on all 3 airflow containers using root, go to cd /home/airflow/.local/lib/python3.12/site-packages/kafka/ using airflow user one by one on web server, scheduler, worker containers and make below changes.
 
 Example:
-docker exec -it 54256ab3aa0e bash
+**docker exec -it 54256ab3aa0e bash
 vi /home/airflow/.local/lib/python3.12/site-packages/kafka/codec.py
+**
 
 Old:
-from kafka.vendor.six.moves import range
+from **kafka.vendor**.six.moves import range
 
 New:
 from six.moves import range
 
-7) Create a topic on kafka server using below command:
+7) Create a topic on kafka container - **airflow_kafka_integration-kafka-1** using below command in interactive mode:
 
 Open interactive mode:
-docker exec -it d91636359ec2 /bin/bash
+**docker exec -it d91636359ec2 /bin/bash**
 
 Create a topic:
-/opt/bitnami/kafka/bin/kafka-topics.sh --create --topic csv_topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+**/opt/bitnami/kafka/bin/kafka-topics.sh --create --topic csv_topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1**
 
 
 To check the topic:
-kafka-topics.sh --list --bootstrap-server localhost:9092
+**kafka-topics.sh --list --bootstrap-server localhost:9092**
 
 8) Login to airflow on web using airflow/airflow as user name and password. Run the dag kafka_csv_workflow which has three tasks -- create_csv,produce_messages,consume_messages
 
